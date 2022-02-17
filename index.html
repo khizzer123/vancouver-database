@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Vancouver Database</title>
+    <meta name = "author" content = "Khizzer">
+    <meta name = "description" content = "Online User Lookup for City of Vancouver">
+    <meta name = "keywords" content = "kh1zzer, Roblox, City of Vancouver, Roblox VPD, Vancouver Police Department, canuckman77, frozen donut">
+
+    <meta property = "og:title" content = "Database">
+    <meta property = "og:description" content = "Database for the Roblox game, City of Vancouver">
+    <meta property = "og:type" content = "website">
+
+    <head>
+        <!-- Loads bootstrap & local stylesheet-->
+        <script src="https://cdn.jsdelivr.net/npm/vanilla-hcaptcha"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css";>
+        <h1 text-align="center">Vancouver V1 Online Database</h1>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+        <script src="index.js"></script> <!-- Loads main JS script -->
+    </head>
+
+    <body>
+        <div id ="mainDiv">
+            <div style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+                Error message
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="usernameInputLabel">ROBLOX username</label>
+                    <input type="text" class="form-control" id="usernameInputBox" aria-describedby="usernameHelp" placeholder="Enter ROBLOX username">
+                </div>
+
+                <h-captcha id="captcha"
+                float: left 
+                sitekey="d2bad8b2-5466-40c3-9369-9cbddc677969"
+                size="normal"
+                theme: dark
+                tabindex="0"></h-captcha>
+                <br>
+                <button type="button" class="btn-primary" id="submitBtn">Submit</button>
+            </form>
+            <script>
+
+            </script>
+            <div id="results" hidden>
+                <img id="avatarImage" src="https://tr.rbxcdn.com/bbe75235e2d6c6573e9b212dd5da8e83/352/352/Avatar/Png">
+                <div id = "textInfoDiv">
+                    <p id="usernameLabel">Username:</p>
+                    <p id="arrestsLabel">Arrests:</p>
+                    <p id="citationsLabel">Citations:</p>
+                    <p id="boloLabel">Bolo:</p>
+                </div>
+
+                <div id="container" style="margin-top: 50px;">
+                    <div id="recordsDiv">
+                        <p style="margin-left: 40px;">Arrests:</p>
+                        <ul id="arrestsList">
+                            <li>
+                                <button id="recordBtn" hidden>[575] Obstruction of a Peace Officer</button>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="recordsDiv">
+                        <p style="margin-left: 40px;">Citations:</p>
+                        <ul id="citationsList">
+                            <li>
+                                <button id="recordBtn" hidden>[575] Obstruction of a Peace Officer</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <p>
+            This site is protected by hCaptcha and its <a href="https://hcaptcha.com/privacy">Privacy Policy</a> and <a href="https://hcaptcha.com/terms">Terms of Service</a> apply.
+        </p>
+    </body>
+
+</html>
