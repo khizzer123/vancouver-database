@@ -63,6 +63,13 @@ async function userLookup(username) {
             citationsList.children[citationsList.children.length - 1].remove();
         }
 
+        if (data.arrests == null) {
+            data.arrests = [];
+        };
+        if (data.citations == null) {
+            data.citations = [];
+        }
+
         if (data.arrests.length >= 1) {
             for (let arrestData of data.arrests) {
                 let recordElement = recordPreFab.cloneNode(true);
@@ -117,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function(){
     
     submitCaptcha.addEventListener('verified', (e) => {
         captchaKey = e.key;
-        console.log('verified event', { key: e.key });
     });
     submitCaptcha.addEventListener('error', (e) => {
         console.log('error event', { error: e.error });
