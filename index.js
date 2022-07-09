@@ -46,8 +46,8 @@ async function userLookup(username) {
         data = await data.json();
         results.hidden = false;
         usernameLabel.innerHTML = `Username: ${username}`;
-        data.arrests = JSON.parse(data.arrests);
-        data.citations = JSON.parse(data.citations);
+/*         data.arrests = JSON.parse(data.arrests);
+        data.citations = JSON.parse(data.citations); */
         console.log('Player Data:', data)
 
         arrestsLabel.innerHTML = `Arrests: ${data.arrests ? data.arrests.length : '0'}`;
