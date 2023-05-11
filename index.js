@@ -18,7 +18,7 @@ function bootstrapInfo(message){
     return element;
 };
 
-const URL = "http://51.195.198.17:3000/userRecords";
+const URL = "https://51.195.198.17:443/userRecords";
 
 
 async function userLookup(username) {
