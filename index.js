@@ -18,7 +18,7 @@ function bootstrapInfo(message){
     return element;
 };
 
-const URL = "https://vancouver-db.herokuapp.com/vancouverv1/userRecords";
+const URL = "http://51.195.198.17:3000/userRecords";
 
 
 async function userLookup(username) {
@@ -44,16 +44,20 @@ async function userLookup(username) {
             }),
         });
         data = await data.json();
+
         results.hidden = false;
         usernameLabel.innerHTML = `Username: ${username}`;
 /*         data.arrests = JSON.parse(data.arrests);
         data.citations = JSON.parse(data.citations); */
         console.log('Player Data:', data)
 
-        arrestsLabel.innerHTML = `Arrests: ${data.arrests ? data.arrests.length : '0'}`;
-        citationsLabel.innerHTML = `Citations: ${data.citations ? data.citations.length: '0'}`;
+        const arrestsLength = data.arrests ? Object.keys(data.arrests).length : '0';
+        const citationsLength = data.citations ? Object.keys(data.citations).length : '0';
+
+        arrestsLabel.innerHTML = `Arrests: ${arrestsLength}`;
+        citationsLabel.innerHTML = `Citations: ${citationsLength}`;
         boloLabel.innerHTML = `Bolo: ${data.warrant}`;
-        avatarImage.src = `https://www.roblox.com/bust-thumbnail/image?userId=${data.userId}&width=180&height=180&format=png`;
+        //avatarImage.src = `https://www.roblox.com/bust-thumbnail/image?userIds=${data.userId}&width=180&height=180&format=png`;
         
         while (arrestsList.children.length > 1) {
             arrestsList.children[arrestsList.children.length - 1].remove();
@@ -70,13 +74,35 @@ async function userLookup(username) {
             data.citations = [];
         }
 
-        if (data.arrests.length >= 1) {
-            for (let arrestData of data.arrests) {
+        let arrests = Object.values(data.arrests);
+        let citations = Object.values(data.citations);
+
+        function sortByDates(arr) {
+            arr.sort((a, b) => {
+                const firstDateSplit = a.Date.split('/');
+                const secondDateSplit = b.Date.split('/');
+    
+                const firstDate = new Date(firstDateSplit[2], firstDateSplit[0], firstDateSplit[1]);
+                const secondDate = new Date(secondDateSplit[2], secondDateSplit[0], secondDateSplit[1]);
+    
+                if (firstDate < secondDate) {
+                    return -1;
+                } else if (firstDate > secondDate) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            })
+            return arr;
+        }
+        arrests = sortByDates(arrests);
+
+        if (arrestsLength >= 1) {
+            for (let arrestData of arrests) {
                 let recordElement = recordPreFab.cloneNode(true);
-                console.log(arrestData);
-                recordElement.innerHTML = `[${arrestData[2]}s] ${arrestData[0]}`;
+                recordElement.innerHTML = `[${arrestData.Length}s] ${arrestData.Offences.toString()}`;
                 recordElement.onclick = function() {
-                    let infoAlert = bootstrapInfo(arrestData[1]);
+                    let infoAlert = bootstrapInfo(`DATE: ${arrestData.Date} / DETAILS: ${arrestData.Details} / OFFICER: ${arrestData.Officer} / OFFICER TEAM: ${arrestData.OfficerTeam}`);
                     document.getElementById('mainDiv').prepend(infoAlert);
                 };
                 recordElement.hidden = false;
@@ -84,13 +110,14 @@ async function userLookup(username) {
             }
         }
 
-        if (data.citations.length >= 1) {
-            for (let citationData of data.citations) {
+        citations = sortByDates(citations);
+
+        if (citationsLength >= 1) {
+            for (let citationData of citations) {
                 let recordElement = recordPreFab.cloneNode(true);
-                console.log(citationData);
-                recordElement.innerHTML = `[$${citationData[2]}] ${citationData[0]}`;
+                recordElement.innerHTML = `[${citationData.Price}] ${citationData.Offences.toString()}`;
                 recordElement.onclick = function() {
-                    let infoAlert = bootstrapInfo(citationData[1]);
+                    let infoAlert = bootstrapInfo(`DATE: ${citationData.Date} / DETAILS: ${citationData.Details} / OFFICER: ${citationData.Officer} / OFFICER TEAM: ${citationData.OfficerTeam}`);
                     document.getElementById('mainDiv').prepend(infoAlert);
                 };
                 recordElement.hidden = false;
